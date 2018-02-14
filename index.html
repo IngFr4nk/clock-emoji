@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Clock</title>
+</head>
+<style>
+    html{
+        font-size: 3rem;
+        font-family:monospace;
+        background: #333;
+        color: orange;
+    }
+    .clock-face{
+        display: flex;
+        justify-content: space-around;
+    }    
+    .hand{
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .hour, .min, .second{
+        width: 10%;
+        height: 10%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+<body>
+    <div class="clock">
+        <div class="clock-face">
+            <div class="hand hour">
+                <p class="hours"></p>
+            </div>
+            <div class="hand min">
+                <p class="minute"></p>
+            </div>
+            <div class="hand second">
+                <p class="second-time"></p>
+            </div>
+        </div>
+        <div class="images">
+            
+        </div>
+    </div>
+    <script>
+        var time = () => {
+            const now = new Date();
+            const hour = now.getHours();
+            const minute = now.getMinutes();
+            const second = now.getSeconds();
+            
+            //set hour
+            let eleH = document.querySelector('.hours');
+            eleH.outerHTML = `<p class="hours">${hour}<p>`;
+            
+            //set minute
+            let eleMin = document.querySelector('.minute');
+            eleMin.outerHTML = `<p class="minute">${minute}<p>`;
+            
+            //set second
+            let ele = document.querySelector('.second-time');
+            ele.outerHTML = `<p class="second-time">${second}<p>`;
+        }
+        setInterval(time, 1000);
+        let img = document.querySelector('.images');
+        
+        fetch('https://api.github.com/emojis', {
+            method: 'get'
+        }).then(function(res){
+            return res.json();
+        }).catch(function(err){
+            console.log(err);
+        }).then(function(response){
+            //console.log(response);
+            Object.entries(response).forEach((index)=>{
+                //console.log(index[1]);
+                var elImg = document.createElement('img');
+                elImg.src = index[1];
+                img.appendChild(elImg);
+               
+            })
+        });
+    </script>
+</body>
+</html>
