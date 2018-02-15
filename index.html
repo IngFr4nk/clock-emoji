@@ -14,6 +14,8 @@
     .clock-face{
         display: flex;
         justify-content: space-around;
+        background: #234d23;
+        margin-bottom: 10px;
     }    
     .hand{
         padding-left: 15px;
@@ -25,6 +27,12 @@
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+    img{
+        width: 40px
+    }
+    .images p {
+        font-size: 10px
     }
 </style>
 <body>
@@ -53,19 +61,18 @@
             
             //set hour
             let eleH = document.querySelector('.hours');
-            eleH.outerHTML = `<p class="hours">${hour}<p>`;
+            eleH.innerHTML = `<p class="hours">${hour}<p>`;
             
             //set minute
             let eleMin = document.querySelector('.minute');
-            eleMin.outerHTML = `<p class="minute">${minute}<p>`;
+            eleMin.innerHTML = `<p class="minute">${minute}<p>`;
             
             //set second
             let ele = document.querySelector('.second-time');
-            ele.outerHTML = `<p class="second-time">${second}<p>`;
+            ele.innerHTML = `<p class="second-time">${second}<p>`;
         }
         setInterval(time, 1000);
         let img = document.querySelector('.images');
-        
         fetch('https://api.github.com/emojis', {
             method: 'get'
         }).then(function(res){
@@ -73,14 +80,14 @@
         }).catch(function(err){
             console.log(err);
         }).then(function(response){
-            //console.log(response);
             Object.entries(response).forEach((index)=>{
-                //console.log(index[1]);
                 var elImg = document.createElement('img');
+                var eP = document.createElement('p')
+                var br = document.createElement('br')
                 elImg.src = index[1];
+                eP.innerHTML = index[0];
                 img.appendChild(elImg);
-               
-            })
+            });
         });
     </script>
 </body>
